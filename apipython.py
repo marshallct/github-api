@@ -40,20 +40,23 @@ days_in_mth = 0
 
 mth_for_days = int(mth_of_creation) - 1
 
-for i in range(0, mth_for_days):
-    mth_days_total += 1
-    if mth_days_total == 2:
-        days_in_mth += 28
-    elif mth_days_total == 4 or mth_days_total == 6 or mth_days_total == 9 or mth_days_total == 11:
-        days_in_mth += 30
-    else:
-        days_in_mth += 31
+if yr_of_account > 0 or mth_of_account > 0:
+    for i in range(0, mth_for_days):
+        mth_days_total += 1
+        if mth_days_total == 2:
+            days_in_mth += 28
+        elif mth_days_total == 4 or mth_days_total == 6 or mth_days_total == 9 or mth_days_total == 11:
+            days_in_mth += 30
+        else:
+            days_in_mth += 31
 
 
 days_in_total = day_of_account + yr_of_account * 365 + days_in_mth
 
 print("In total, account is " + str(days_in_total) + " days old.")
 
+contribs = requests.get('https://api.github.com/users/marshallct/repos')
+len_contribs = contribs.json()
 
 #Try to find account activity as a %, measure how many days since account creation has there been contributions
 #Go through commits, see what changes they have made (file name extensions) to see which langauge they have used
