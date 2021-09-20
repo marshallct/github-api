@@ -65,11 +65,11 @@ len_contribs = contribs.json()
 #Write program that takes name of developer, construct url to get account information, display certain amount of information
 #Write in account name, gives back account name and age
 
-#dt_of_creation = datetime.strptime(response.json()['created_at'],"%Y-%m-%dT%H:%M:%SZ")
-#print(dt_of_creation)
-#print(dt_formatted)
+"""dt_of_creation = datetime.strptime(response.json()['created_at'],"%Y-%m-%dT%H:%M:%SZ")
+print(dt_of_creation)
+print(dt_formatted)
 
-#username = response.json()['login']
-#print('Account name: ', username)
-#dt_formatt2 = username.strftime('Account was created on %b %d, %Y. It was a %A. Time was %H:%M:%S')
-#print(dt_formatt2)s
+username = response.json()['login']
+print('Account name: ', username)
+dt_formatt2 = username.strftime('Account was created on %b %d, %Y. It was a %A. Time was %H:%M:%S')
+print(dt_formatt2)s"""
