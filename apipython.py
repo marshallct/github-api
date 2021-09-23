@@ -7,6 +7,7 @@ response = requests.get('https://api.github.com/users/marshallct')
 #print(response.json()['login'])
 
 user_req = input("Enter a username: ")
+repo_name = input("Enter the name of the repository: ")
 req = requests.get('https://api.github.com/users/' + user_req)
 #print(req.json()['created_at'])
 
@@ -55,21 +56,15 @@ days_in_total = day_of_account + yr_of_account * 365 + days_in_mth
 
 print("In total, account is " + str(days_in_total) + " days old.")
 
-contribs = requests.get('https://api.github.com/users/marshallct/repos')
-len_contribs = contribs.json()
+total_lang = requests.get('https://api.github.com/repos/' + user_req  + '/' + repo_name + '/languages').json()
+
+print('The language used most in this repository is ' + max(total_lang))
+print(max(total_lang) + ' has ' + str(total_lang[max(total_lang)]) + ' text characters.')
 
 #Try to find account activity as a %, measure how many days since account creation has there been contributions
-#Go through commits, see what changes they have made (file name extensions) to see which langauge they have used
 
+#Go through commits, see what changes they have made (file name extensions) to see which langauge they have used
 #Change format of datetime
 #Write program that takes name of developer, construct url to get account information, display certain amount of information
 #Write in account name, gives back account name and age
 
-"""dt_of_creation = datetime.strptime(response.json()['created_at'],"%Y-%m-%dT%H:%M:%SZ")
-print(dt_of_creation)
-print(dt_formatted)
-
-username = response.json()['login']
-print('Account name: ', username)
-dt_formatt2 = username.strftime('Account was created on %b %d, %Y. It was a %A. Time was %H:%M:%S')
-print(dt_formatt2)s"""
