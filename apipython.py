@@ -3,9 +3,6 @@ import json
 from datetime import datetime
 response = requests.get('https://api.github.com/users/marshallct')
 
-#print(response.json()['created_at'])
-#print(response.json()['login'])
-
 user_req = input("Enter a username: ")
 repo_name = input("Enter the name of the repository: ")
 req = requests.get('https://api.github.com/users/' + user_req)
@@ -68,3 +65,11 @@ print(max(total_lang) + ' has ' + str(total_lang[max(total_lang)]) + ' text char
 #Write program that takes name of developer, construct url to get account information, display certain amount of information
 #Write in account name, gives back account name and age
 
+#Do the same calculation as langauges, but instead use commit history to find commit files changes, using file name extension
+#How often certain files (.py, etc) appear, count the appearance of each, show all languages used in a repository
+#Try to create a function from the code
+#Find languages used in a certain time block. Original code function can be modified.
+
+#With this, find how many languages a developer uses
+#Can use this to find more interesting data, age, geography, etc.
+#Can find list of developers with certain criteria
