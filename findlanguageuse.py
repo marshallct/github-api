@@ -3,7 +3,7 @@ import requests
 import json
 import base64
 
-token = "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"
+token = ""
 headers = {"Authorization": "token " + token}
 login = requests.get("https://api.github.com/user", headers=headers)
 print(login.json())
