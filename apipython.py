@@ -64,12 +64,16 @@ print(max(total_lang) + ' has ' + str(total_lang[max(total_lang)]) + ' text char
 #Change format of datetime
 #Write program that takes name of developer, construct url to get account information, display certain amount of information
 #Write in account name, gives back account name and age
-
 #Do the same calculation as langauges, but instead use commit history to find commit files changes, using file name extension
 #How often certain files (.py, etc) appear, count the appearance of each, show all languages used in a repository
 #Try to create a function from the code
-#Find languages used in a certain time block. Original code function can be modified.
+#Find languages used in a certain time block, report frequency of file changes, count the frequency of a file ending
+#How many languages a repository uses, return account of amount of each language
+#Turn this into a function, gives data about a repository
+#Use this to go over larger repositories
 
 #With this, find how many languages a developer uses
 #Can use this to find more interesting data, age, geography, etc.
 #Can find list of developers with certain criteria
+#Try to run code against something bigger (D3, other stuff larger than github api)
+#Add trace statements, printouts (show progress, every 1000 commit output the fact you've done it), debugger

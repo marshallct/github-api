@@ -3,13 +3,15 @@ import requests
 import json
 import base64
 
-token = "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"
+
+username = 'marshallct'
+token = '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'
+login = requests.get('https://api.github.com/search/repositories?q=github+api', auth=(username,token))
 headers = {"Authorization": "token " + token}
-login = requests.get("https://api.github.com/user", headers=headers)
-print(login.json())
-print(requests.get("https://api.github.com/users/marshallct/orgs").json())
-
-
+login1 = requests.get("https://api.github.com/user", headers=headers)
+#add the metadata for login1
+print('Rate limit is ' + login1.headers['X-RateLimit-Limit'])
+#add rate limit data and write to console
 
 
 repo_user = input("Please enter the username of the repo: ")
@@ -18,44 +20,67 @@ repo_year = input("Please enter the year of block: ")
 repo_month = input("Please enter the month of block: ")
 repo_day = input("Please enter the day of block: ")
 
-req = requests.get('https://api.github.com/repos/' + repo_user + '/' + repo_name + "/commits").json()
-dt_of_commit = datetime.strptime(req[0]['commit']['committer']['date'],"%Y-%m-%dT%H:%M:%SZ")
+req = requests.get('https://api.github.com/repos/' + repo_user + '/' + repo_name + "/commits", headers=headers)
+print('Rate limit remaining is ' + req.headers['X-RateLimit-Remaining'])
+dt_of_commit = datetime.strptime(req.json()[0]['commit']['committer']['date'],"%Y-%m-%dT%H:%M:%SZ")
 yr_of_block = dt_of_commit.strftime("%Y")
 mth_of_block = dt_of_commit.strftime("%m")
 day_of_block = dt_of_commit.strftime("%d")
 
+repo_list = requests.get('https://api.github.com/users/' + repo_user + '/repos').json()
+for i in repo_list:
+    name_of_repo = i['commits_url']
+
 totalfiles = 0
 #finds the file name extension
 all_files = []
-repo_1 = requests.get("https://api.github.com/repos/mikepenz/materialdrawer/commits").json()
-commit_list = requests.get("https://api.github.com/repos/" + repo_user + '/' + repo_name + "/commits").json()
+repo_names1 = name_of_repo.replace('{/sha}', "")
+repo_names = requests.get(repo_names1, headers=headers).json()
+print(name_of_repo)
+print(repo_names)
+"""commit_list = requests.get(str(name_of_repo) + '/commits').json()"""
 if yr_of_block == repo_year or repo_year == '0' and mth_of_block == repo_month or repo_month == '0' and day_of_block == repo_day or repo_day == '0':
     print("Grabbing files")
-    for key in commit_list:
+    for key in repo_names:
         get_url = requests.get(key['commit']['tree']['url']).json()
         commit1 = get_url['tree']
         for key in commit1:
             if key['type'] == 'tree':
-                commit2 = requests.get(key['url']).json()
-                commit3 = commit2['tree']
-                for key in commit3:
-                    if key['type'] == 'tree':
-                        commit4 = requests.get(key['url']).json()
-                        commit5 = commit4['tree']
-                        for key in commit5:
+                for i in key:
+                    i = requests.get(key['url']).json()
+                    commit3 = i['tree']
+                    for key in commit3:
+                        print(key)
+                        if key['type'] == 'tree':
+                            commit4 = requests.get(key['url']).json()
+                            commit5 = commit4['tree']
+                            for key in commit5:
+                                all_files.append(key['path'])
+                                totalfiles += 1
+                                if totalfiles % 10 == 0:
+                                    print("Grabbing file number" + str(totalfiles))
+                                else:
+                                    break
+                        elif key['type'] == 'blob':
                             all_files.append(key['path'])
-                            totalfiles += 1
-                            if totalfiles % 10 == 0:
-                                print("Grabbing file number" + str(totalfiles))
-                    elif key['type'] == 'blob':
-                        all_files.append(key['path'])
+                        else:
+                            break
             elif key['type'] == 'blob':
                 all_files.append(key['path'])
                 totalfiles += 1
                 if totalfiles % 5 == 0:
                     print("Grabbing file " + str(totalfiles))
+            else:
+                break
     print("All files have been grabbed")
 
+def languagecounter(filename):
+    files = []
+    for file in all_files:
+        if filename in file:
+            files.append(file)
+    return len(files)
+    
 #counts number of files
 print("Counting total number of files")
 py_files = []
@@ -126,5 +151,3 @@ if len(r_files) > 0:
     print('R has been committed ' + str(len(r_files)) + ' times.')
 
 
-#Try to run code against something bigger (D3, other stuff larger than github api)
-#Add trace statements, printouts (show progress, every 1000 commit output the fact you've done it), debugger
