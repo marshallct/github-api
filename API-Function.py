@@ -6,7 +6,7 @@ def commit_file_extensions_by_year(username):
     import requests
     import json
     import base64
-    token = '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'
+    token = ''
     headers = {"Authorization": "token " + token}
     login1 = requests.get("https://api.github.com/user", headers=headers)
     #add the metadata for login1
