@@ -1,8 +1,8 @@
-from apifunction import commit_file_extensions_by_year
-from apifunction import add_file
-from apifunction import filter_commits_by_year
-from apifunction import language_count
-from apifunction import extension_list
+from api_function import commit_file_extensions_by_year
+from api_function import add_file
+from api_function import filter_commits_by_year
+from api_function import language_count
+from api_function import extension_list
 
 
 #print(languageuse('marshallct', 'github-api'))

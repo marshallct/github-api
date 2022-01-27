@@ -1,12 +1,12 @@
-
+from datetime import datetime
+import requests
+import json
+import base64
+#import env_var.json
 #Finds file name extensions of all files made in *all* the repositories of a user.
 #Returns [Year the file was committed, file name]
 def commit_file_extensions_by_year(username):
-    from datetime import datetime
-    import requests
-    import json
-    import base64
-    token = ''
+    token = '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'
     headers = {"Authorization": "token " + token}
     login1 = requests.get("https://api.github.com/user", headers=headers)
     #add the metadata for login1
@@ -114,3 +114,9 @@ def extension_list(language_name, extension_name, cfes, years):
         }
         files_year_number['extension_list'].append(l_counts)
     return files_year_number
+
+"""Get d3 visualisation with json file
+Generate file from backend code"""
+#Decide and design visual to match data gathered, implement
+#Decide what your data is actually for
+"""break the limits of pi charting"""
